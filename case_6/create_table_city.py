@@ -4,24 +4,6 @@ import pandas as pd
 with sqlite3.connect("cities.db") as connection:
     cursor = connection.cursor()
 
-create_table_region = """
-    CREATE TABLE region(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        region_name TEXT NOT NULL
-    );
-"""
-cursor.execute(create_table_region)
-
-create_table_city = """
-    CREATE TABLE city(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        city_name TEXT NOT NULL,
-        region_id INTEGER NOT NULL,
-        FOREIGN KEY(region_id) REFERENCES region(id)
-        );
-"""
-cursor.execute(create_table_city)
-
 file = pd.read_csv('towns.csv')
 # делаю список кортежей из отсортированных регионов без дубляжа
 region_name = list(zip(tuple(sorted(set(file.region_name)))))
